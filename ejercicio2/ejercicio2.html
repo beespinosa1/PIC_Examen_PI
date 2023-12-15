@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 2</title>
+    <script type="module" src="emisor-component.js"></script>
+    <script type="module" src="receptor-component.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #app {
+            text-align: center;
+        }
+
+        #button-component {
+            margin-bottom: 20px;
+        }
+
+        #update-button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgb(204, 19, 111); /* Color rosado */
+            border: none;
+            color: white; /* Color de texto blanco */
+        }
+
+        #message-component {
+            margin-top: 20px;
+        }
+
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2 id="page-title">EJERCICIO 2</h2>
+        <h3>Nombre: Bárbara Espinosa</h3>
+
+        <emisor-component></emisor-component>
+        <receptor-component></receptor-component>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const updateButton = document.getElementById('update-button');
+            const messageElement = document.getElementById('message');
+
+            let clics = 0;
+
+            updateButton.addEventListener('click', function () {
+                clics++;
+                const customEvent = new CustomEvent('actualizar-mensaje', { 
+                    detail: { mensaje: `Número de clics: ${clics}` } 
+                });
+                document.dispatchEvent(customEvent);
+            });
+
+            document.addEventListener('actualizar-mensaje', function (event) {
+                const nuevoMensaje = event.detail.mensaje;
+                messageElement.textContent = nuevoMensaje;
+            });
+        });
+    </script>
+</body>
+</html>

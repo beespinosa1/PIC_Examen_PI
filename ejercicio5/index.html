@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 5</title>
+    <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #app {
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        counter-component {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        h3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2 id="page-title">EJERCICIO 5</h2>
+        <h3>Nombre: Bárbara Espinosa</h3>
+    </div>
+
+    <div>
+        <contador-component></contador-component>
+
+    </div>
+
+    <script>
+        class CounterComponent extends HTMLElement {
+            constructor() {
+                super();
+                this._counter = 0;
+                this.attachShadow({ mode: 'open' });
+                this.render();
+            }
+
+            render() {
+                this.shadowRoot.innerHTML = `
+    <style>
+        button {
+      padding: 12px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 0;
+      transition: background-color 0.3s ease;
+        }
+    </style>
+          <div align='center'>
+            
+            <h1 id="counterValue">${this._counter}</h1><br>
+            <button id="decrement">DISMINUIR</button><br>
+            <button id="increment">INCREMENTAR</button>
+          </div>
+
+
+        `;
+
+                this.shadowRoot.getElementById('increment').addEventListener('click', () => this.increment());
+                this.shadowRoot.getElementById('decrement').addEventListener('click', () => this.decrement());
+            }
+
+            increment() {
+                this._counter++;
+                this.updateCounter();
+            }
+
+            decrement() {
+                this._counter--;
+                this.updateCounter();
+            }
+
+            updateCounter() {
+                this.shadowRoot.getElementById('counterValue').textContent = this._counter;
+            }
+
+            connectedCallback() {
+                this.updateCounter();
+            }
+        }
+
+        customElements.define('contador-component', CounterComponent);
+    </script>
+
+</body>
+
+</html>
